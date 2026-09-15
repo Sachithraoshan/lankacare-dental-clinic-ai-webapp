@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if request is from an authenticated admin
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Services collection: public read for patients, write restricted to admin
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Clinic info: public read for opening hours, address, phone; admin write
+    match /clinicInfo/{infoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Appointments collection:
+    // Any patient can submit an appointment request if it contains required fields
+    // Admin can read, update status, and manage all appointments
+    match /appointments/{appointmentId} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.phone is string
+                    && request.resource.data.service is string
+                    && request.resource.data.date is string
+                    && request.resource.data.time is string;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

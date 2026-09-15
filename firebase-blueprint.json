@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "appointment": {
+      "title": "Appointment",
+      "description": "Patient booking for dental consultations and procedures",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "service": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "phone", "email", "service", "date", "time", "status", "createdAt"]
+    },
+    "service": {
+      "title": "Service",
+      "description": "Dental treatment and consultation services offered by LankaCare",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "duration": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["name", "description", "duration", "category"]
+    },
+    "clinicInfo": {
+      "title": "ClinicInfo",
+      "description": "Single-document clinic details, operating hours, and contact points",
+      "type": "object",
+      "properties": {
+        "hours": { "type": "object" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "socials": { "type": "object" }
+      },
+      "required": ["hours", "address", "phone", "socials"]
+    }
+  },
+  "firestore": {
+    "/appointments/{appointmentId}": {
+      "schema": "appointment",
+      "description": "Appointments created by patients and managed by clinic administration"
+    },
+    "/services/{serviceId}": {
+      "schema": "service",
+      "description": "Public directory of dental care services provided by LankaCare Dental Clinic"
+    },
+    "/clinicInfo/{infoId}": {
+      "schema": "clinicInfo",
+      "description": "Editable clinic settings, address, telephone, and weekly hours"
+    }
+  }
+}

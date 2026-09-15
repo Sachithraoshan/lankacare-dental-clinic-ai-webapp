@@ -1,0 +1,6 @@
+{
+  "name": "LankaCare Dental Clinic",
+  "description": "GET AI Agency demo portfolio project - A modern, accessible dental clinic web application featuring appointment booking, service directory, interactive clinic info, and a Gemini-powered FAQ assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
